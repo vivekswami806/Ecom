@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../../component/layout/Layout'
 
-function signup() {
+function Signup() {
   return (
     <Layout>
         <h1> SignUp</h1>
@@ -9,4 +9,4 @@ function signup() {
   )
 }
 
-export default signup
+export default Signup

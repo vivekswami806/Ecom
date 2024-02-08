@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../../component/layout/Layout'
 
-function signin() {
+function Signin() {
   return (
     <Layout>
         <h1>Login page</h1>
@@ -9,4 +9,4 @@ function signin() {
   )
 }
 
-export default signin
+export default Signin

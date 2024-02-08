@@ -6,6 +6,7 @@ function Layout({children}) {
   return (
     <>
      <Header/>
+     <h1> i am lay out</h1>
      <main>{children} </main>
      <Footer/>
     </>
