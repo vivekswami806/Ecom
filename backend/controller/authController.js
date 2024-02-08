@@ -67,8 +67,9 @@ export const loginController = async (req, res) => {
     res.status(200).send({ message: "Email or password is invalid" });
   }
   let token = jwt.sign({ _id: existingUser._id }, process.env.SECRET_KEY, {
-    expiresIn: "7d",
+    expiresIn: "7h",
   });
+  console.log(token);
 
   res.status(200).send({
     message: "you are successfully login",
