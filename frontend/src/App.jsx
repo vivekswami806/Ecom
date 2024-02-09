@@ -5,6 +5,9 @@ import HomePage from "./pages/HomePage"
 import PageNotFound from "./pages/PageNotFound"
 import Signup from "./pages/auth/signup"
 import Signin from "./pages/auth/signin"
+import Dashbord from "./pages/user/Dashbord"
+import ProtectedRoute from "./component/route/ProtectedRoute"
+
 
 function App() {
   return (
@@ -13,10 +16,12 @@ function App() {
           <Route path="/" element={<HomePage/>}/>
           <Route path="/aboutpage" element={<Aboutpage/>}/>
           <Route path="/contactpage" element={<ContactPage/>}/>
-          <Route path="/pagenotfound" element={<PageNotFound/>}/>
+          <Route path="/*" element={<PageNotFound/>}/>
           <Route path="/signuppage" element={<Signup/>}/>
-          <Route path="/signinpage" element={<Signin/>}/>
-          
+          <Route path='/dashboard' element={<ProtectedRoute/>}>
+          <Route path='' element={<Dashbord/>}/>
+          </Route>
+          <Route path="/signinpage" element={<Signin/>}/>         
         </Routes>
     </>
   )

@@ -22,7 +22,6 @@ let registerController = async (req, res) => {
       return res.status(500).send({ message: "address is required" });
     }
     let findUser = await userModel.findOne({ email: email });
-    console.log(findUser);
     if (findUser) {
       return res.status(200).send({ message: "user already Exit" });
     }
@@ -36,8 +35,8 @@ let registerController = async (req, res) => {
     }).save();
     res
       .status(200)
-      .send({ message: "user is register Successfully", success: true });
-    console.log(user);
+      .send({ message: "user is register Successfully", success: true, });
+    
   } catch (err) {
     console.log(err);
     res.status(500).send({
@@ -64,13 +63,9 @@ export const loginController = async (req, res) => {
   }
   let userCorrect = await matchPassword(password, existingUser.password);
   if (!userCorrect) {
-    res.status(200).send({ message: "Email or password is invalid" });
+   return res.status(200).send({ message: "Email or password is invalid" });
   }
-  let token = jwt.sign({ _id: existingUser._id }, process.env.SECRET_KEY, {
-    expiresIn: "7h",
-  });
-  console.log(token);
-
+  let token = jwt.sign({ _id: existingUser._id }, process.env.SECRET_KEY);
   res.status(200).send({
     message: "you are successfully login",
     success: true,
@@ -80,7 +75,7 @@ export const loginController = async (req, res) => {
       phone: existingUser.phone,
       address: existingUser.address,
       role: existingUser.role,
-    },
+    },          
     token,
   });
   

@@ -6,8 +6,8 @@ let route= express.Router()
 // REGISTER|| POST
  route.post("/register",registerController)
  route.post("/login",loginController)
-route.get("/test", isRequire,isAdmin,(req,res)=>{
-    res.send("test is done")
+ route.get('/auth-user',isRequire,(req,res)=>{
+    res.send({ok:true})
 })
 
  export default route;
