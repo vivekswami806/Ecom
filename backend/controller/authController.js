@@ -77,6 +77,7 @@ export const loginController = async (req, res) => {
         phone: existingUser.phone,
         address: existingUser.address,
         role: existingUser.role,
+        answer: existingUser.answer,
       },
       token,
     });
@@ -92,23 +93,18 @@ export const forgotPassword = async (req, res) => {
   try {
     let { email, password, answer } = req.body;
     if (!email) {
-      res.status(200).send({ message: "Email is required" });
+      return res.status(200).send({ message: "Email is required" });
     }
     if (!password) {
-      res.status(200).send({ message: "Password is required" });
+     return res.status(200).send({ message: "Password is required" });
     }
     if (!answer) {
-      res.status(200).send({ message: "Answer is required" });
+     return res.status(200).send({ message: "Answer is required" });
     }
-    let existingUser = await userModel.findOne({ email: email });
+    let existingUser = await userModel.findOne({ email ,answer});
+   
     if (!existingUser) {
-      res.status.send({ message: "Email is not valid" });
-    }
-    
-    let correctAnswer = await userModel.find({answer });
-     console.log(correctAnswer, "answer");
-    if (!correctAnswer) {
-      res.status.send({ message: "Answer is Incorrect Try Different Way" });
+     return   res.status(200).send({ message: "Email or Answer is not valid " });
     }
     let hashPassword = await encryptPassword(password);
     let updateData = await userModel.findByIdAndUpdate(

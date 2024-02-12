@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Layout from "../../component/layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 let host = import.meta.env.VITE_SERVER_DOMAIN;
 function Signup() {
+  let navigate=useNavigate()
   let initialData = {
     name: "",
     email: "",
@@ -47,6 +49,7 @@ function Signup() {
 
       if (data.success) {
         toast(data.message);
+        navigate("/signin")
       }
      }
      catch(err){
@@ -96,7 +99,7 @@ function Signup() {
             id="address"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             name="address"
-            placeholder="Enter your address"
+            placeholder="Enter your Address"
             onChange={changeHandel}
             value={formData.address}
           />
@@ -107,7 +110,7 @@ function Signup() {
             id="answer"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             name="answer"
-            placeholder="Enter your address"
+            placeholder="Enter your Answer"
             onChange={changeHandel}
             value={formData.answer}
           />

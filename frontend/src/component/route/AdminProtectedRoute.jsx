@@ -4,12 +4,12 @@ import { useAuth } from "../../context/Authcontext";
 import { Outlet } from "react-router-dom";
 import Spinner from "../Spinner";
 let host = import.meta.env.VITE_SERVER_DOMAIN;
-function ProtectedRoute() {
+function AdminProtectedRoute() {
   let [auth, setAuth] = useAuth();
   const [ok, setok] = useState(false);
-  async function isValidUser() {
+  async function isAdmin() {
     try {
-      let res = await axios(`${host}/api/v1/auth-user`, {
+      let res = await axios(`${host}/api/v1/admin-auth-route`, {
         headers: { Authorization: auth.token },
       });
       let data = res.data;
@@ -23,10 +23,10 @@ function ProtectedRoute() {
   }
   useEffect(() => {
     if (auth.token) {
-      isValidUser();
+      isAdmin();
     }
-  }, [ok, auth]);
+  }, []);
   return <div>{ok?<Outlet/>:<Spinner/>} </div>;
 }
 
-export default ProtectedRoute;
+export default AdminProtectedRoute;
