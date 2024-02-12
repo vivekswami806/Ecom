@@ -6,8 +6,8 @@ function Layout({children}) {
   return (
     <>
     <Toaster/>
-     <Header/>
-     <main>{children} </main>
+     <Header />
+     <main className="min-h-[75.3vh]">{children} </main>
      <Footer/>
     </>
   )

@@ -3,7 +3,7 @@ import Layout from "../../component/layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useAuth  } from "../../context/Authcontext";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 let host = import.meta.env.VITE_SERVER_DOMAIN;
 function Signin() {
   const [auth, setAuth]= useAuth()
@@ -84,6 +84,7 @@ function Signin() {
             value={formData.password}
           />
         </div>
+        <div className="flex justify-around mb-3 text-center justify-items-center">
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -91,6 +92,8 @@ function Signin() {
         >
         Login
         </button>
+        <NavLink to={"/forgetpassword"} className="mt-2" >Forget Password! </NavLink>
+        </div>
       </form>
     </Layout>
   );

@@ -7,6 +7,7 @@ import Signup from "./pages/auth/signup"
 import Signin from "./pages/auth/signin"
 import Dashbord from "./pages/user/Dashbord"
 import ProtectedRoute from "./component/route/ProtectedRoute"
+import ForgetPassword from "./pages/auth/ForgetPassword"
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path='' element={<Dashbord/>}/>
           </Route>
           <Route path="/signinpage" element={<Signin/>}/>         
+          <Route path="/forgetpassword" element={<ForgetPassword/>}/>         
         </Routes>
     </>
   )

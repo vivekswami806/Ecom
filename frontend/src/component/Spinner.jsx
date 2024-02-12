@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import loading from "../assets/loading1.png"
 function Spinner() {
  let [timmer, settimmer]=useState(4)
 let naviagte= useNavigate()
@@ -15,7 +15,18 @@ let naviagte= useNavigate()
     },[timmer])
   return (
     <div>
-    {timmer}
+
+    <div className="bg-gray-100 flex items-center justify-center h-screen">
+      <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="flex items-center justify-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"><img src={loading} alt="" /> </div>
+        </div>
+        <div className="mt-4 text-center">
+          <p className="text-xl font-semibold">Loading...</p>
+          {timmer}
+        </div>
+      </div>
+    </div>
     </div>
   )
 }

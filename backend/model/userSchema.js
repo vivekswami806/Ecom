@@ -25,5 +25,9 @@ let userSchema=new mongoose.Schema({
         type:Boolean,
          default:0
     },
+    answer:{
+        type:String,
+        require:true
+    }
 },{timestamps:true})
 export default mongoose.model('users', userSchema)
