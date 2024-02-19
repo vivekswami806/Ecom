@@ -3,11 +3,12 @@ import dotenv from "dotenv";
 import DbConnect from "./config/DB.js";
 import morgan from "morgan";
 import authRoute from "./route/authRoute.js";
+import categoryRoute from "./route/CategoryRoute.js"
+import productRoute from "./route/productRoute.js"
 import cors from "cors"
 let app = express();
 //  config
 dotenv.config();
-//database connect are here
 
 // server starting at here
 let PORT = process.env.PORT;
@@ -19,8 +20,10 @@ app.use(express.json());
 app.use(morgan('dev'))
 //authRoute
 app.use('/api/v1',authRoute)
- 
+app.use('/api/v1',categoryRoute)
+app.use('/api/v1', productRoute)
 app.listen(PORT,hostName,() => {
+//database connect are here
   DbConnect()
   console.log(
      `server is on at http://${hostName}:${PORT} in ${process.env.MODE} `

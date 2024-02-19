@@ -28,16 +28,20 @@ function HomePage() {
               <button
                 className="w-20 h-4 text-white dark:text-gray-400"
                 aria-hidden="true"
-               
                 fill="currentColor"
                 viewBox="20 20 0 0"
               >
-                Search 
+                Search
               </button>
             </span>
-          
           </div>
         </div>
+      </div>
+      <div>
+      प्रिय लिखकर मैं नीचे लिख दूँ नाम तुम्हारा कुछ जगह बीच में छोड़ दूँ
+          नीचे लिख दूँ ‘सदा तुम्हारा’ लिखा बीच में क्या यह तुमको पढ़ना है कागज़
+          पर मन की परिभाषा का अर्थ समझना है जो भी अर्थ निकलोगी तुम वह मुझको
+          स्वीकार है झुके नयन, मौन अधर या कोरा कागज़ अर्थ सभी का प्यार है
       </div>
     </Layout>
   );

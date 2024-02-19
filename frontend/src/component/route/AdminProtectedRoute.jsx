@@ -26,7 +26,7 @@ function AdminProtectedRoute() {
       isAdmin();
     }
   }, []);
-  return <div>{ok?<Outlet/>:<Spinner/>} </div>;
+  return <div>{ok?<Outlet/>:<Spinner path={"/"}/>} </div>;
 }
 
 export default AdminProtectedRoute;

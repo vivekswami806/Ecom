@@ -26,7 +26,7 @@ function ProtectedRoute() {
       isValidUser();
     }
   }, [ok, auth]);
-  return <div>{ok?<Outlet/>:<Spinner/>} </div>;
+  return <div>{ok?<Outlet/>:<Spinner path="/"/>} </div>;
 }
 
 export default ProtectedRoute;

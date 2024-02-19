@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import loading from "../assets/loading1.png"
-function Spinner() {
+function Spinner({path}) {
  let [timmer, settimmer]=useState(4)
 let naviagte= useNavigate()
+let location = useLocation()
     useEffect(()=>{
-         let x=   setTimeout(()=>{
+         let x= setTimeout(()=>{
                     settimmer(timmer-1)
             },1000)
-            if(timmer==0)naviagte("/")
+            if(timmer==0)naviagte(path?path:"/signin",{state:location.pathname})
             return ()=>{
                 clearTimeout(x)
             }
