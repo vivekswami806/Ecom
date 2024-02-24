@@ -12,10 +12,12 @@ import AdminProtectedRoute from "./component/route/AdminProtectedRoute";
 import Order from "./pages/user/Order";
 import Profile from "./pages/user/Profile";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import Users from "./pages/admin/Users";
+import Users from "./pages/admin/Products";
 import AllOrder from "./pages/admin/AllOrder";
 import CreateCategory from "./pages/admin/CreateCategory";
 import CreateProduct from "./pages/admin/CreateProduct";
+import Products from "./pages/admin/Products";
+import UpdateAndDeleteProduct from "./pages/admin/UpdateAndDeleteProduct";
 
 function App() {
   return (
@@ -34,10 +36,11 @@ function App() {
         {/* Admin Dashboard Route */}
         <Route path="/dashboard" element={<AdminProtectedRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
-          <Route path="admin/create-category" element={<CreateProduct />} />
-          <Route path="admin/create-product" element={<CreateCategory />} />
+          <Route path="admin/create-category" element={<CreateCategory />} />
+          <Route path="admin/create-product" element={<CreateProduct/>} />
+          <Route path="admin/update-delete-product/:id" element={<UpdateAndDeleteProduct/>} />       
           <Route path="admin/all-orders" element={<AllOrder/>} />
-          <Route path="admin/users" element={<Users />} />         
+          <Route path="admin/products" element={<Products />} />         
         </Route>
         <Route path="/signinpage" element={<Signin />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />

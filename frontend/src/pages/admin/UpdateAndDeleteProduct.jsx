@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../component/layout/Layout";
 import AdminDashboardMenu from "../../component/AdminDashboardMenu";
 import useCategorycontext from "../../hook/useCategory";
@@ -6,16 +6,22 @@ import { Button, Select, Upload } from "antd";
 import { Option } from "antd/es/mentions";
 import { UploadOutlined } from "@ant-design/icons";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { useAuth } from "../../context/Authcontext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useProduct from "../../hook/useProduct";
+import axios from "axios";
+
 let host = import.meta.env.VITE_SERVER_DOMAIN;
-function CreateProduct() {
+function UpdateAndDeleteProduct() {
+  const {id} = useParams();
+   let [isSubmitSuccess , setIssubmitSuccess]= useState(false)
   let navigate = useNavigate()
   let [auth]= useAuth()
-  let { categories} = useCategorycontext();
-  let [category, setCategory] = useState("");
+  let { categories } = useCategorycontext();
+  let {productChange,setProductChange}= useProduct() 
+  let {getSingleProduct ,single_loader,single_error,product} = useProduct()
+  console.log(product);
+  let [category, setCategory] = useState();
   let [images, setImages] = useState([]);
   let [name, setname] = useState("");
   let [brand, setBrand] = useState("");
@@ -23,20 +29,16 @@ function CreateProduct() {
   let [description, setDescription] = useState("");
   let [shipping, setShipping] = useState("");
   let [quantity, setQuantity] = useState("");
-  let {productChange, setProductChange }= useProduct()
-  let [isCreateProduct, setIsCreateProduct] = useState(falseF)
+ 
   let categorySelector = (value) => {
     setCategory(value);
   };
-  let submitProductHandle= async (e)=>{
+  let updateProductHandle= async (e)=>{
      try {
-      if(!category || !name || !brand|| !price ||!description || !shipping || !quantity){
+      if(!category || !name || !brand|| !price ||!description || !shipping || !quantity || !images){
         toast('all field are Required')
        }
-       if(images.length ==0){
-        toast("Atlest You have give ine Image ")
-       }
-  
+     
        let formData = new FormData()
        formData.append('name', name)
        formData.append('brand', brand)
@@ -48,12 +50,13 @@ function CreateProduct() {
   
        for(let i =0 ; i< images.length ; i++){
         formData.append("images",images[i].originFileObj)
-       }
-       let res= await axios.post(`${host}/api/v1/createproduct`,formData,{headers:{"Content-Type":"multipart/form-data", Authorization:auth.token}})
+       } 
+      
+       let res= await axios.put(`${host}/api/v1/updateproduct/${id}`,formData,{headers:{"Content-Type":"multipart/form-data", Authorization:auth.token}})
        if(res.data.success){
          toast(res.data.message)
+         setProductChange(!productChange)
          navigate("/dashboard/admin/products")
-          setProductChange(!productChange)
        }
        else{
         toast(res.data.message)
@@ -63,26 +66,65 @@ function CreateProduct() {
        console.log(error);
        toast(error.message)
      }
-     e.preventDefault()
   }
+   let deleteProductHandle = async()=>{
+    setIssubmitSuccess(true)
+     try {
+      let res = await axios.delete(`${host}/api/v1/deleteproduct/${id}`,{
+        headers:{Authorization:auth.token}
+       })
+       if(res.data.success){
+        toast(res.data.message)
+        setProductChange(!productChange)
+        navigate("/dashboard/admin/products")
+       }
+      
+     } catch (error) {
+      console.log(error);
+      toast(error.message)
+     }
+     finally{
+      setIssubmitSuccess(false)
+     }
+   }
+  useEffect(()=>{
+    getSingleProduct(`${host}/api/v1/singleproduct/${id}`)
+  },[])
+  useEffect(()=>{
+      if(Object.keys(product).length>0){
+        setCategory(product?.category)
+        setname(product?.name);
+        setDescription(product?.description)
+        setPrice(product?.price)
+        setBrand(product?.brand)
+        setShipping(product?.shipping)
+        setImages(product?.images)
+        setQuantity(product?.quantity)
+      }
+  },[single_loader])
+
   return (
     <Layout>
-      <h1 className=" text-3xl mt-6 text-center">CREATE PRODUCT</h1>
+      <h1 className=" text-3xl mt-6 text-center">Update And Delete PRODUCT</h1>
       <div className="grid grid-flow-col  justify-items-start">
         <AdminDashboardMenu />
         <div className=" flex flex-col gap-6">
           <div>
-            <Select
-              showSearch
-              placeholder="Select a Category"
-              optionFilterProp="children"
-              onChange={categorySelector}
-              style={{ width: "500px" }}
-            >
-              {categories?.map((item) => {
-                return <Option value={item._id}>{item.name}</Option>;
-              })}
-            </Select>
+          {categories.length>0 && (
+                <Select
+                showSearch
+                placeholder="Select your category"
+                optionFilterProp="children"
+                onChange={categorySelector}
+                value={category}
+                className=" w-full"
+                >
+                 {categories.map((items,i)=>{
+                  return <Option key={i} value={items._id}>{items.name}</Option>
+                 })}
+
+                </Select>
+              )}
           </div>
 
           <div className="">
@@ -96,6 +138,7 @@ function CreateProduct() {
               maxCount={4}
               multiple
               accept="image/*"
+              value={[...images]}
             >
               <Button icon={<UploadOutlined />}>Product Images Upload</Button>
             </Upload>
@@ -111,6 +154,7 @@ function CreateProduct() {
               aria-label="Username"
               aria-describedby="addon-wrapping"
               name="name"
+              value={name}
               onChange={(e) => {
                 setname(e.target.value);
               }}
@@ -123,6 +167,7 @@ function CreateProduct() {
             <input
               type="text"
               name="brand"
+              value={brand}
               className="form-control"
               aria-label="Username"
               aria-describedby="addon-wrapping"
@@ -135,6 +180,7 @@ function CreateProduct() {
             </span>
             <input
             name="price"
+            value={price}
               type="number"
               className="form-control"
               aria-label="Username"
@@ -156,6 +202,7 @@ function CreateProduct() {
               aria-label="Username"
               aria-describedby="addon-wrapping"
               onChange={(e) => setDescription(e.target.value)}
+              value={description}
             />
           </div>
           <div className="input-group flex-nowrap">
@@ -169,6 +216,7 @@ function CreateProduct() {
               aria-label="Username"
               aria-describedby="addon-wrapping"
               onChange={(e) => setQuantity(e.target.value)}
+              value={quantity}
             />
           </div>
           <div className="input-group flex-nowrap">
@@ -181,6 +229,7 @@ function CreateProduct() {
               className="form-control "
               optionFilterProp="children"
               onChange={(value) => setShipping(value)}
+              value={shipping}
             >
               <option value="" disabled>
                 Select a option
@@ -190,7 +239,9 @@ function CreateProduct() {
             </Select>
           </div>
           <div>
-            <button className=" btn btn-success" onClick={submitProductHandle}>Submit</button>
+            {isSubmitSuccess && <h1>Loading.......</h1>}
+            <button className=" btn btn-success" onClick={updateProductHandle}>Update </button>
+            <button className=" btn btn-danger" onClick={deleteProductHandle}>Delete </button>
           </div>
         </div>
       </div>
@@ -198,4 +249,4 @@ function CreateProduct() {
   );
 }
 
-export default CreateProduct;
+export default UpdateAndDeleteProduct;

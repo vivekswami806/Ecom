@@ -13,7 +13,7 @@ function AdminProtectedRoute() {
         headers: { Authorization: auth.token },
       });
       let data = res.data;
-      console.log(data);
+     
       if (data.ok) {
         setok(data.ok);
       }

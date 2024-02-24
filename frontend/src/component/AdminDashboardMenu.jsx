@@ -11,8 +11,8 @@ function AdminDashboardMenu() {
         <Link to="/dashboard/admin/all-orders" className="w-full px-4 py-2 rounded-t-lg  border-gray-200 dark:border-gray-600 border-b-2">
           Order
         </Link>
-        <Link to="/dashboard/admin/users" className="w-full px-4 py-2  border-gray-200 border-b-2 dark:border-gray-600">
-          Users
+        <Link to="/dashboard/admin/products" className="w-full px-4 py-2  border-gray-200 border-b-2 dark:border-gray-600">
+         Products
         </Link>
         <Link to="/dashboard/admin/create-category" className="w-full px-4 py-2  border-gray-200 dark:border-gray-600 border-b-2">
          Create Category
