@@ -18,6 +18,11 @@ import CreateCategory from "./pages/admin/CreateCategory";
 import CreateProduct from "./pages/admin/CreateProduct";
 import Products from "./pages/admin/Products";
 import UpdateAndDeleteProduct from "./pages/admin/UpdateAndDeleteProduct";
+import DeatailsProduct from "./pages/ProductDetailPage";
+import Searchpage from "./pages/Searchpage";
+import Categorypage from "./pages/Categorypage";
+import AddToCart from "./component/form/AddToCart";
+import AddtoCart from "./pages/AddtoCart";
 
 function App() {
   return (
@@ -26,6 +31,11 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/aboutpage" element={<Aboutpage />} />
         <Route path="/contactpage" element={<ContactPage />} />
+        <Route path="/productdetailpage/:id" element={<DeatailsProduct />} />
+        <Route path="/searchpage" element={<Searchpage />} />
+        <Route path="/searchpage" element={<Searchpage />} />
+        <Route path="/categorypage" element={<Categorypage />} />
+        <Route path="/addtocart" element={<AddtoCart />} />
        
         <Route path="/signuppage" element={<Signup />} />
         <Route path="/dashboard" element={<ProtectedRoute />}>

@@ -5,6 +5,7 @@ import morgan from "morgan";
 import authRoute from "./route/authRoute.js";
 import categoryRoute from "./route/CategoryRoute.js"
 import productRoute from "./route/productRoute.js"
+import orderRoute from "./route/orderRoute.js"
 import cors from "cors"
 let app = express();
 //  config
@@ -22,6 +23,7 @@ app.use(morgan('dev'))
 app.use('/api/v1',authRoute)
 app.use('/api/v1',categoryRoute)
 app.use('/api/v1', productRoute)
+app.use('/api/v1', orderRoute)
 app.listen(PORT,hostName,() => {
 //database connect are here
   DbConnect()

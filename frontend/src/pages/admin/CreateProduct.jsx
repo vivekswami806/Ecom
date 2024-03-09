@@ -10,6 +10,7 @@ import axios from "axios";
 import { useAuth } from "../../context/Authcontext";
 import { useNavigate } from "react-router-dom";
 import useProduct from "../../hook/useProduct";
+import Loding from "../../component/Loding";
 let host = import.meta.env.VITE_SERVER_DOMAIN;
 function CreateProduct() {
   let navigate = useNavigate()
@@ -24,11 +25,12 @@ function CreateProduct() {
   let [shipping, setShipping] = useState("");
   let [quantity, setQuantity] = useState("");
   let {productChange, setProductChange }= useProduct()
-  let [isCreateProduct, setIsCreateProduct] = useState(falseF)
+  let [isCreateProduct, setIsCreateProduct] = useState(false)
   let categorySelector = (value) => {
     setCategory(value);
   };
   let submitProductHandle= async (e)=>{
+    setIsCreateProduct(true)
      try {
       if(!category || !name || !brand|| !price ||!description || !shipping || !quantity){
         toast('all field are Required')
@@ -62,6 +64,9 @@ function CreateProduct() {
      } catch (error) {
        console.log(error);
        toast(error.message)
+     }
+     finally{
+      setIsCreateProduct(false)
      }
      e.preventDefault()
   }
@@ -190,6 +195,7 @@ function CreateProduct() {
             </Select>
           </div>
           <div>
+            {isCreateProduct && <Loding data= "Creating"/>}
             <button className=" btn btn-success" onClick={submitProductHandle}>Submit</button>
           </div>
         </div>

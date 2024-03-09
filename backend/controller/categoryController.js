@@ -47,7 +47,6 @@ export const createCategoryController= async(req,res)=>{
  export const allCategoryController = async(req,res)=>{
     try {
       let category =await categoryModel.find({}).sort({createdAt:-1})
-      console.log(category);
       res.status(200).send({message:"All category", success:true, category , total:category.length})
       
     } catch (error) {

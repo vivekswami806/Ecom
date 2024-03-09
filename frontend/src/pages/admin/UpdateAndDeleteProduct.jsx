@@ -10,6 +10,7 @@ import { useAuth } from "../../context/Authcontext";
 import { useNavigate, useParams } from "react-router-dom";
 import useProduct from "../../hook/useProduct";
 import axios from "axios";
+import Loding from "../../component/Loding";
 
 let host = import.meta.env.VITE_SERVER_DOMAIN;
 function UpdateAndDeleteProduct() {
@@ -34,11 +35,11 @@ function UpdateAndDeleteProduct() {
     setCategory(value);
   };
   let updateProductHandle= async (e)=>{
+    setIssubmitSuccess(true)
      try {
       if(!category || !name || !brand|| !price ||!description || !shipping || !quantity || !images){
         toast('all field are Required')
-       }
-     
+       }    
        let formData = new FormData()
        formData.append('name', name)
        formData.append('brand', brand)
@@ -46,8 +47,7 @@ function UpdateAndDeleteProduct() {
        formData.append('price', price)
        formData.append('shipping', shipping)
        formData.append('quantity', quantity)
-       formData.append('category', category)
-  
+       formData.append('category', category) 
        for(let i =0 ; i< images.length ; i++){
         formData.append("images",images[i].originFileObj)
        } 
@@ -65,6 +65,9 @@ function UpdateAndDeleteProduct() {
      } catch (error) {
        console.log(error);
        toast(error.message)
+     }
+     finally{
+      setIssubmitSuccess(false)
      }
   }
    let deleteProductHandle = async()=>{
@@ -239,7 +242,7 @@ function UpdateAndDeleteProduct() {
             </Select>
           </div>
           <div>
-            {isSubmitSuccess && <h1>Loading.......</h1>}
+            {isSubmitSuccess && <Loding data= {isSubmitSuccess && updateProductHandle?"Updating":"Deleting"}/>}
             <button className=" btn btn-success" onClick={updateProductHandle}>Update </button>
             <button className=" btn btn-danger" onClick={deleteProductHandle}>Delete </button>
           </div>

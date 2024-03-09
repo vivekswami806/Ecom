@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/Authcontext";
 import logo from "../../assets/logo.png";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import useCart from "../../hook/useCart";
 function Header() {
   let [auth, setAuth] = useAuth();
+  const [cart ,setCart] = useCart()
   const [isMenuOpen, setMenuOpen] = useState(false)
   function removeToken() {
     setAuth({
@@ -14,6 +17,10 @@ function Header() {
   function ToggleMenu(){
     setMenuOpen(!isMenuOpen)
   }
+  let totalCartCount = cart.reduce((acc,item)=>{
+  return acc +item.count
+  },0)
+ 
   return (
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -118,10 +125,10 @@ function Header() {
 
               <li>
                 <NavLink
-                  to="/cart"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Cart(0){" "}
+                  to="/addtocart"
+                  className=" flex relative  py-2 px-6  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                > < AiOutlineShoppingCart className="" />
+               <span className="badge bg-secondary"> {totalCartCount} </span>             
                 </NavLink>
               </li>
             </ul>

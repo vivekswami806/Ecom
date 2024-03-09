@@ -38,6 +38,7 @@ function ProductContext({ children }) {
     try {
       dispatch(singleLoading())
       let {data} = await axios.get(url)
+    
       dispatch(fetchSingleProduct(data.product))
     } catch (error) {
       console.log(error);

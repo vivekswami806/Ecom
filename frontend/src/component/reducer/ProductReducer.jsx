@@ -11,6 +11,7 @@ import { ERROR, FETCH_ALL_DATA, FETCH_SINGEL_DATA, LOADING, SINGLE_LOADING_DATA 
           case SINGLE_LOADING_DATA:
             return{...state, single_loader:true}
         case FETCH_SINGEL_DATA:
+         
           return{...state ,single_loader:false,product:action.payload}
          case SINGLE_ERR:
           return{...state, single_loader:false,single_error:action.payload}

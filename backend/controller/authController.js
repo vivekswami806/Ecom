@@ -121,4 +121,38 @@ export const forgotPassword = async (req, res) => {
       .send({ message: "Something is worng", success: false, error });
   }
 };
+
+export let profileUpdateController=async(req,res)=>{
+  try{
+    let {name,address,phone,password}=req.body
+    if(!name || !address || !phone)
+    {
+      return res.staus(200).send({message:"All fileld required *",success:false})
+    }
+    else{
+      let findData= await userModel.find({_id:req.user._id})
+      if(findData)
+      {
+        let newPassword=password ? await  encryptPassword(password) :findData.password;
+        let updateData= await userModel.findByIdAndUpdate({_id:req.user._id},{...req.body,password:newPassword},{new:true})
+        res.status(200).send({message:"Profile is Updated successful",success:true,user: {
+          name: updateData.name,
+          email: updateData.email,
+          phone: updateData.phone,
+          address: updateData.address,
+          role: updateData.role,
+          answer: updateData.answer,
+        },})
+      }
+      else{
+        return res.status(500).send({success:false,message:"somthing wrong"})
+      }
+    }
+  }
+  catch(err)
+  {
+    console.log(err)
+    res.status(500).send({message:"Somthing wrong while updating",err,success:false})
+  }
+}
 export default registerController;
